@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #ffe6f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            line-height: 1.4;
+        }
+
+        .btn-sim {
+            padding: 15px 30px;
+            font-size: clamp(1rem, 5vw, 1.2rem);
+            background-color: #77dd77;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
+            transition: transform 0.2s;
+        }
+
+        .btn-sim:active {
+            transform: scale(0.95);
+        }
+
+        .btn-nao {
+            padding: 15px 30px;
+            font-size: clamp(1rem, 5vw, 1.2rem);
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.3s ease;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .hearts {
+            position: fixed;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 3s linear forwards;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .btn-nao {
+                position: relative;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quer uma massagem completa, com luz baixa e som de chuva?</h1>
+        <button class="btn-sim" onclick="showHearts()">Claro, meu marido lindo</button>
+        <button class="btn-nao" id="btnNao" ontouchstart="moveButton()" onmouseover="moveButton()">Não</button>
+    </div>
+    <div class="hearts" id="heartsContainer"></div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('btnNao');
+            const maxX = window.innerWidth - btn.offsetWidth - 20;
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function showHearts() {
+            const container = document.getElementById('heartsContainer');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 95 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        // Mobile touch detection
+        document.addEventListener('touchstart', function() {}, true);
+    </script>
+</body>
+</html>
